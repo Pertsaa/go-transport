@@ -131,9 +131,9 @@ export class Player {
 	}
 
 	setVolume(volume: number) {
+		this.#volume = volume;
 		if (!this.#gainNode) return;
 		this.#gainNode.gain.value = getLogarithmicVolume(volume);
-		this.#volume = volume;
 	}
 
 	#playNextFrame() {
