@@ -16,7 +16,7 @@
 		bufferLatencyMs: 50
 	});
 
-	let volumeSliderValue = $state(Number(localStorage.getItem('volume')));
+	let volumeSliderValue = $state(Number(localStorage.getItem('volume') ?? '0.5'));
 
 	// need references
 	let canvasEl: HTMLCanvasElement;
