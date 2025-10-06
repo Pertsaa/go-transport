@@ -11,7 +11,7 @@
 	let open = $state(false);
 
 	function handleShortcuts(e: KeyboardEvent) {
-		if ((e.key === 'k' || e.key === 'f') && e.metaKey) {
+		if ((e.key === 'k' || e.key === 'f') && (e.metaKey || e.ctrlKey)) {
 			e.preventDefault();
 			open = true;
 		}
