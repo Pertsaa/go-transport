@@ -1,0 +1,25 @@
+# --- Stage 1: Build ---
+FROM golang:alpine AS builder
+
+ENV CGO_ENABLED=0
+
+WORKDIR /app
+
+COPY backend/go.mod backend/go.sum ./
+RUN go mod download
+
+COPY backend/. .
+
+RUN go build -o server ./cmd/server
+
+# --- Stage 2: Prod ---
+FROM alpine:latest
+
+WORKDIR /app
+
+EXPOSE 8080
+
+COPY audio/output ./audio/output
+COPY --from=builder /app/server /app/server
+
+CMD ["/app/server"]
