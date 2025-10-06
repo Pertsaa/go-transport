@@ -1,3 +1,5 @@
+import { getLogarithmicVolume } from '$lib/query/track';
+
 type PlayerOptions = {
 	wsUrl: string;
 	sampleRate: number;
@@ -47,7 +49,7 @@ export class Player {
 
 		this.#audioCtx = new AudioContext({ sampleRate: this.#options.sampleRate });
 		this.#gainNode = this.#audioCtx.createGain();
-		this.#gainNode.gain.value = this.#volume;
+		this.#gainNode.gain.value = getLogarithmicVolume(this.#volume);
 
 		// Setup analyser node for frequency visualization
 		this.#analyser = this.#audioCtx.createAnalyser();
@@ -130,7 +132,7 @@ export class Player {
 
 	setVolume(volume: number) {
 		if (!this.#gainNode) return;
-		this.#gainNode.gain.value = volume;
+		this.#gainNode.gain.value = getLogarithmicVolume(volume);
 		this.#volume = volume;
 	}
 

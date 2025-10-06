@@ -16,7 +16,7 @@
 		bufferLatencyMs: 50
 	});
 
-	let volumeSliderValue = $state(1);
+	let volumeSliderValue = $state(Number(localStorage.getItem('volume')));
 
 	// need references
 	let canvasEl: HTMLCanvasElement;
@@ -24,6 +24,7 @@
 
 	$effect(() => {
 		player.setVolume(volumeSliderValue);
+		localStorage.setItem('volume', volumeSliderValue.toString());
 	});
 
 	onMount(() => {

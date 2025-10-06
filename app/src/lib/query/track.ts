@@ -17,3 +17,17 @@ export function formatTrackName(track: TrackList['tracks'][number]) {
 	}
 	return `${track.folder} - ${track.name.substring(0, lastDot)}`;
 }
+
+export function getLogarithmicVolume(linearVolume: number) {
+	const LOG_BASE = 10;
+
+	const clampedLinearVolume = Math.min(1, Math.max(0, linearVolume));
+
+	if (clampedLinearVolume === 0) {
+		return 0;
+	}
+
+	const logarithmicVolume = (Math.pow(LOG_BASE, clampedLinearVolume) - 1) / (LOG_BASE - 1);
+
+	return Math.min(1.0, Math.max(0.0, logarithmicVolume));
+}
