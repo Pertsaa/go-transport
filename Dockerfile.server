@@ -19,7 +19,6 @@ WORKDIR /app
 
 EXPOSE 8080
 
-COPY audio/output ./audio/output
 COPY --from=builder /app/server /app/server
 
 CMD ["/app/server"]

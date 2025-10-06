@@ -5,8 +5,10 @@
 	import Search from '$lib/component/search.svelte';
 	import { formatTrackName, type TrackList } from '$lib/query/track';
 
+	const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+
 	const player = new Player({
-		wsUrl: 'ws://localhost:8080/ws',
+		wsUrl: `${protocol}://${window.location.host}/ws`,
 		sampleRate: 48000,
 		channels: 1,
 		bytesPerSample: 2,
@@ -90,14 +92,14 @@
 	let activeTrack: any = $state();
 
 	onMount(async () => {
-		const res = await fetch('http://localhost:8080/tracks');
+		const res = await fetch('/api/tracks');
 		trackList = await res.json();
 
-		const trackRes = await fetch('http://localhost:8080/track');
+		const trackRes = await fetch('/api/track');
 		activeTrack = await trackRes.json();
 
 		activeTrackIntervalId = setInterval(async () => {
-			const res = await fetch('http://localhost:8080/track');
+			const res = await fetch('/api/track');
 			activeTrack = await res.json();
 		}, 5000);
 	});

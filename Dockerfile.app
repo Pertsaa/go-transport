@@ -15,6 +15,7 @@ RUN deno task build
 FROM nginx:alpine AS final
 
 COPY --from=builder /app/build /usr/share/nginx/html
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

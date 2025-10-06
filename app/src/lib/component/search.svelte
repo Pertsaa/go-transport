@@ -18,14 +18,14 @@
 	}
 
 	async function playFolder(folder: TrackList['folders'][number]) {
-		await fetch('http://localhost:8080/play', {
+		await fetch('/api/play', {
 			method: 'POST',
 			body: JSON.stringify({ folder: folder.name, track: '' })
 		});
 	}
 
 	async function playTrack(track: TrackList['tracks'][number]) {
-		await fetch('http://localhost:8080/play', {
+		await fetch('/api/play', {
 			method: 'POST',
 			body: JSON.stringify({ folder: track.folder, track: track.name })
 		});

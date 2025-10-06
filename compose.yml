@@ -1,0 +1,18 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./audio/output:/app/audio/output
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "80:80"
+    depends_on:
+      - server
