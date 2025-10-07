@@ -53,7 +53,7 @@ services:
 
       # Basic Auth
       - "traefik.http.routers.client.middlewares=client-auth"
-      - "traefik.http.middlewares.client-auth.basicauth.users=pokkne:$apr1$pj9or.Cf$igpBDjYzv3R6/Hcvfm8ly1"
+      - "traefik.http.middlewares.client-auth.basicauth.users=pokkne:$$apr1$$pj9or.Cf$$igpBDjYzv3R6/Hcvfm8ly1"
 
   server:
     build:
