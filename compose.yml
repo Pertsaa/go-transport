@@ -50,6 +50,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server
+    restart: unless-stopped
+    networks:
+      - proxy
     volumes:
       - ./audio/output:/app/audio/output
     labels:
