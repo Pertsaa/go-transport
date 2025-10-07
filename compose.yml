@@ -31,7 +31,7 @@ services:
       - "--entrypoints.websecure.http.tls.certresolver=le"
 
       # Logging (stdout only)
-      - "--log.level=DEBUG"
+      - "--log.level=INFO"
       - "--accesslog=true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -49,6 +49,7 @@ services:
       - "traefik.http.routers.client.rule=Host(`pokkne.fi`)"
       - "traefik.http.routers.client.entrypoints=websecure"
       - "traefik.http.routers.client.tls=true"
+      - "traefik.http.routers.client.tls.certresolver=le"
 
   server:
     build:
@@ -64,6 +65,7 @@ services:
       - "traefik.http.routers.server.rule=Host(`pokkne.fi`) && PathPrefix(`/api`)"
       - "traefik.http.routers.server.entrypoints=websecure"
       - "traefik.http.routers.server.tls=true"
+      - "traefik.http.routers.server.tls.certresolver=le"
       - "traefik.http.routers.server.middlewares=server-stripprefix"
       - "traefik.http.middlewares.server-stripprefix.stripprefix.prefixes=/api"
 
