@@ -11,11 +11,8 @@ import (
 
 // Audio settings
 const (
-	SampleRate = 48000            // 48 kHz standard for Discord/Opus
-	Frequency  = 440              // A4 note reference (unused in conversion)
-	Channels   = 2                // Stereo
-	BitDepth   = 16               // 16-bit PCM
-	FrameSize  = SampleRate / 100 // 480 samples (10ms)
+	SampleRate = 48000 // 48 kHz
+	Channels   = 2     // Stereo
 )
 
 func main() {

@@ -84,7 +84,9 @@ export class Player {
 
 			this.#frameQueue.push(float32Data);
 
-			const frameDuration = this.#options.frameSize / this.#options.sampleRate;
+			const samplesPerChannel = int16View.length / this.#options.channels;
+			const frameDuration = samplesPerChannel / this.#options.sampleRate;
+
 			this.#bufferedSeconds += frameDuration;
 
 			if (
