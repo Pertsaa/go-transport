@@ -10,8 +10,8 @@
 	const player = new Player({
 		wsUrl: `${protocol}://${window.location.host}/api/ws`,
 		sampleRate: 48000,
-		channels: 1,
-		bytesPerSample: 2,
+		channels: 2,
+		bytesPerSample: 4,
 		frameSize: 480,
 		bufferLatencyMs: 50
 	});

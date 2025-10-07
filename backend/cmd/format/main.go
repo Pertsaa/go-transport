@@ -13,14 +13,14 @@ import (
 const (
 	SampleRate = 48000            // 48 kHz standard for Discord/Opus
 	Frequency  = 440              // A4 note reference (unused in conversion)
-	Channels   = 1                // Mono
+	Channels   = 2                // Stereo
 	BitDepth   = 16               // 16-bit PCM
 	FrameSize  = SampleRate / 100 // 480 samples (10ms)
 )
 
 func main() {
-	inputDir := "audio/input"
-	outputDir := "audio/output"
+	inputDir := "../audio/input"
+	outputDir := "../audio/output"
 
 	// Ensure output directory exists
 	if err := os.MkdirAll(outputDir, 0755); err != nil {

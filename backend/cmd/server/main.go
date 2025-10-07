@@ -16,12 +16,11 @@ import (
 )
 
 const (
-	SampleRate     = 48000                   // 48 kHz is standard for Discord/Opus
-	Frequency      = 440                     // A4 note (unused)
-	Channels       = 1                       // Mono
+	SampleRate     = 48000                   // 48 kHz
+	Channels       = 2                       // Stereo
 	BitDepth       = 16                      // 16-bit PCM
-	FrameSize      = SampleRate / 100        // 480 samples = 10ms
-	BytesPerSample = BitDepth / 8 * Channels // 2 bytes for 16-bit mono
+	FrameSize      = SampleRate / 100        // 480 samples per 10ms per channel
+	BytesPerSample = BitDepth / 8 * Channels // 4 bytes per sample frame
 	AudioDir       = "audio/output"          // Base directory for audio files
 )
 

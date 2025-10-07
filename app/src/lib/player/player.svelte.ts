@@ -145,10 +145,20 @@ export class Player {
 
 		const buffer = this.#audioCtx.createBuffer(
 			this.#options.channels,
-			data.length,
+			data.length / this.#options.channels,
 			this.#options.sampleRate
 		);
-		buffer.getChannelData(0).set(data);
+		if (this.#options.channels === 2) {
+			const left = buffer.getChannelData(0);
+			const right = buffer.getChannelData(1);
+
+			for (let i = 0, j = 0; i < left.length; i++, j += 2) {
+				left[i] = data[j]; // L
+				right[i] = data[j + 1]; // R
+			}
+		} else {
+			buffer.getChannelData(0).set(data);
+		}
 
 		const source = this.#audioCtx.createBufferSource();
 		source.buffer = buffer;
