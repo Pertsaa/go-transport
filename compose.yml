@@ -29,6 +29,10 @@ services:
       - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.le.acme.tlschallenge=true"
       - "--entrypoints.websecure.http.tls.certresolver=le"
+
+      # Logging (stdout only)
+      - "--log.level=DEBUG"
+      - "--accesslog=true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - "./letsencrypt:/letsencrypt"
