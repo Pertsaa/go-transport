@@ -27,7 +27,7 @@ services:
       # TLS
       - "--certificatesresolvers.le.acme.email=autti.perttu@gmail.com"
       - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
-      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
       - "--entrypoints.websecure.http.tls.certresolver=le"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
