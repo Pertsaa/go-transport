@@ -17,7 +17,7 @@ export class Player {
 	#audioCtx: AudioContext | undefined;
 	#gainNode: GainNode | undefined;
 	#analyser: AnalyserNode | undefined;
-	#frequencyDataArray: Uint8Array | undefined;
+	#frequencyDataArray: Uint8Array<ArrayBuffer> | undefined;
 
 	#startTime = 0;
 	#bufferedSeconds = 0;

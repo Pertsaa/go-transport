@@ -1,18 +1,63 @@
 services:
-  server:
-    build:
-      context: .
-      dockerfile: Dockerfile.server
+  traefik:
+    image: traefik:v3.5
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
     ports:
-      - "8080:8080"
+      - "80:80"
+      - "443:443"
+    command:
+      # EntryPoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls=true"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+
+      # Providers
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=proxy"
+
+      # TLS
+      - "--certificatesresolvers.le.acme.email=autti.perttu@gmail.com"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+      - "--entrypoints.websecure.http.tls.certresolver=le"
     volumes:
-      - ./audio/output:/app/audio/output
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - "./letsencrypt:/letsencrypt"
 
   client:
     build:
       context: .
       dockerfile: Dockerfile.app
-    ports:
-      - "80:80"
-    depends_on:
-      - server
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.client.rule=Host(`pokkne.fi`) && PathPrefix(`/`)"
+      - "traefik.http.routers.client.entrypoints=websecure"
+      - "traefik.http.routers.client.tls=true"
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    volumes:
+      - ./audio/output:/app/audio/output
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.server.rule=Host(`pokkne.fi`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.server.entrypoints=websecure"
+      - "traefik.http.routers.server.tls=true"
+
+networks:
+  proxy:
+    name: proxy
