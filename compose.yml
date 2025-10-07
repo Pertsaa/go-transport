@@ -60,6 +60,8 @@ services:
       - "traefik.http.routers.server.rule=Host(`pokkne.fi`) && PathPrefix(`/api`)"
       - "traefik.http.routers.server.entrypoints=websecure"
       - "traefik.http.routers.server.tls=true"
+      - "traefik.http.routers.server.middlewares=server-stripprefix"
+      - "traefik.http.middlewares.server-stripprefix.stripprefix.prefixes=/api"
 
 networks:
   proxy:
