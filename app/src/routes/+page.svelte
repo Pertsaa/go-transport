@@ -8,7 +8,7 @@
 	const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
 
 	const player = new Player({
-		wsUrl: `${protocol}://${window.location.host}/ws`,
+		wsUrl: `${protocol}://${window.location.host}/api/ws`,
 		sampleRate: 48000,
 		channels: 1,
 		bytesPerSample: 2,
