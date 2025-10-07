@@ -42,7 +42,7 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.client.rule=Host(`pokkne.fi`) && PathPrefix(`/`)"
+      - "traefik.http.routers.client.rule=Host(`pokkne.fi`)"
       - "traefik.http.routers.client.entrypoints=websecure"
       - "traefik.http.routers.client.tls=true"
 

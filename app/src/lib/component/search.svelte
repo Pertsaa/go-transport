@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { formatTrackName, type TrackList } from '$lib/query/track';
-	import { FolderIcon, ListMusicIcon, Music2Icon, SearchIcon } from '@lucide/svelte';
+	import { AntennaIcon, FolderIcon, ListMusicIcon, Music2Icon, SearchIcon } from '@lucide/svelte';
 
 	type Props = {
 		trackList: TrackList;
@@ -37,12 +37,13 @@
 <button
 	command="show-modal"
 	commandfor="dialog"
-	class="rounded-md bg-gray-800/80 px-2.5 py-1.5 text-sm font-semibold text-white hover:bg-gray-700/90"
+	class="absolute left-4 top-4 cursor-pointer rounded-full bg-gray-800/80 p-3 text-white shadow-lg hover:scale-105"
 >
-	Open command palette
+	<SearchIcon class="size-6" />
+	<span class="sr-only">Open command palette</span>
 </button>
 
-<el-dialog {open} onopen={() => (open = true)} onclose={() => (open = false)}>
+<el-dialog open={open || undefined} onopen={() => (open = true)} onclose={() => (open = false)}>
 	<dialog id="dialog" class="backdrop:bg-transparent">
 		<el-dialog-backdrop
 			class="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 transition-opacity"

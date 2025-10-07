@@ -119,12 +119,12 @@
 
 	<!-- Controls docked at bottom -->
 	<div
-		class="absolute bottom-0 left-0 right-0 flex items-center justify-between rounded border border-white/10 bg-gray-900/80 px-6 py-4"
+		class="absolute bottom-0 left-0 right-0 flex items-center justify-between rounded border border-white/10 bg-gray-950/80 px-6 py-4"
 	>
 		<div class="flex items-center">
 			<button
 				onclick={handleConnectionToggle}
-				class="cursor-pointer rounded-full bg-gray-500 p-3 shadow-lg hover:scale-105"
+				class="cursor-pointer rounded-full bg-gray-800/80 p-3 shadow-lg hover:scale-105"
 			>
 				{#if player.status === 'connected'}
 					<PauseIcon class="h-6 w-6 text-white" />
@@ -152,7 +152,7 @@
 				min="0"
 				max="1"
 				step="0.01"
-				class="cursor-pointer accent-gray-500"
+				class="cursor-pointer accent-gray-800/80"
 			/>
 		</div>
 	</div>
