@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { formatTrackName, type TrackList } from '$lib/query/track';
-	import { AntennaIcon, FolderIcon, ListMusicIcon, Music2Icon, SearchIcon } from '@lucide/svelte';
+	import { FolderIcon, ListMusicIcon, Music2Icon, SearchIcon } from '@lucide/svelte';
 
 	type Props = {
 		trackList: TrackList;
@@ -9,6 +9,8 @@
 	const { trackList }: Props = $props();
 
 	let open = $state(false);
+
+	let commandPalette: HTMLDivElement & { reset: () => void };
 
 	function handleShortcuts(e: KeyboardEvent) {
 		if ((e.key === 'k' || e.key === 'f') && (e.metaKey || e.ctrlKey)) {
@@ -22,6 +24,7 @@
 			method: 'POST',
 			body: JSON.stringify({ folder: folder.name, track: '' })
 		});
+		handleClose();
 	}
 
 	async function playTrack(track: TrackList['tracks'][number]) {
@@ -29,6 +32,16 @@
 			method: 'POST',
 			body: JSON.stringify({ folder: track.folder, track: track.name })
 		});
+		handleClose();
+	}
+
+	function handleOpen() {
+		open = true;
+	}
+
+	function handleClose() {
+		open = false;
+		commandPalette.reset();
 	}
 </script>
 
@@ -37,13 +50,13 @@
 <button
 	command="show-modal"
 	commandfor="dialog"
-	class="absolute left-4 top-4 cursor-pointer rounded-full bg-gray-800/80 p-3 text-white shadow-lg hover:scale-105"
+	class="cursor-pointer rounded-full bg-gray-800/80 p-3 text-white shadow-lg hover:scale-105"
 >
 	<SearchIcon class="size-6" />
 	<span class="sr-only">Open command palette</span>
 </button>
 
-<el-dialog open={open || undefined} onopen={() => (open = true)} onclose={() => (open = false)}>
+<el-dialog open={open || undefined} onopen={handleOpen} onclose={handleClose}>
 	<dialog id="dialog" class="backdrop:bg-transparent">
 		<el-dialog-backdrop
 			class="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 transition-opacity"
@@ -57,7 +70,7 @@
 			<el-dialog-panel
 				class="data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in mx-auto block max-w-2xl transform overflow-hidden rounded-xl bg-gray-900/80 shadow-2xl outline-1 -outline-offset-1 outline-white/10 backdrop-blur-sm backdrop-filter transition-all"
 			>
-				<el-command-palette>
+				<el-command-palette bind:this={commandPalette}>
 					<div class="grid grid-cols-1 border-b border-white/10">
 						<!-- svelte-ignore a11y_autofocus -->
 						<input

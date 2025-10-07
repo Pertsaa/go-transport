@@ -115,45 +115,42 @@
 <main class="relative h-screen w-screen overflow-hidden bg-neutral-950">
 	<canvas bind:this={canvasEl} class="absolute inset-0"></canvas>
 
-	<Search {trackList} />
+	<div class="absolute left-0 right-0 top-4 flex items-center gap-3 overflow-hidden px-6">
+		<Search {trackList} />
+		{#if activeTrack}
+			<div
+				class="w-[min(fit,300px)] overflow-hidden rounded-full border border-white/10 bg-gray-950/80 px-6 py-2"
+			>
+				<div class="track-marquee whitespace-nowrap text-sm text-slate-500">
+					{formatTrackName(activeTrack)}
+				</div>
+			</div>
+		{/if}
+	</div>
 
 	<!-- Controls docked at bottom -->
 	<div
-		class="absolute bottom-0 left-0 right-0 flex items-center justify-between rounded border border-white/10 bg-gray-950/80 px-6 py-4"
+		class="absolute bottom-0 left-0 right-0 flex items-center justify-between overflow-hidden rounded border border-white/10 bg-gray-950/80 px-6 py-4"
 	>
-		<div class="flex items-center">
-			<button
-				onclick={handleConnectionToggle}
-				class="cursor-pointer rounded-full bg-gray-800/80 p-3 shadow-lg hover:scale-105"
-			>
-				{#if player.status === 'connected'}
-					<PauseIcon class="h-6 w-6 text-white" />
-				{:else}
-					<PlayIcon class="h-6 w-6 text-white" />
-				{/if}
-			</button>
-
-			{#if activeTrack}
-				<div class="flex flex-col gap-1 pl-6 text-white">
-					<div>{formatTrackName(activeTrack)}</div>
-				</div>
+		<button
+			onclick={handleConnectionToggle}
+			class="cursor-pointer rounded-full bg-gray-800/80 p-3 shadow-lg hover:scale-105"
+		>
+			{#if player.status === 'connected'}
+				<PauseIcon class="h-6 w-6 text-white" />
+			{:else}
+				<PlayIcon class="h-6 w-6 text-white" />
 			{/if}
-		</div>
+		</button>
 
-		<!-- <div>
-			<span class="text-sm font-semibold text-gray-400">{player.status}</span>
-		</div> -->
-
-		<div class="flex items-center gap-4">
-			<input
-				bind:value={volumeSliderValue}
-				aria-label="volume"
-				type="range"
-				min="0"
-				max="1"
-				step="0.01"
-				class="cursor-pointer accent-gray-800/80"
-			/>
-		</div>
+		<input
+			bind:value={volumeSliderValue}
+			aria-label="volume"
+			type="range"
+			min="0"
+			max="1"
+			step="0.01"
+			class="cursor-pointer accent-gray-800"
+		/>
 	</div>
 </main>

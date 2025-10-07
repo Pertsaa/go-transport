@@ -1,1 +1,18 @@
 @import 'tailwindcss';
+
+.track-marquee {
+	display: inline-block;
+	padding-left: 100%;
+	/* start off-screen to the right */
+	animation: scroll-left 16s linear infinite;
+}
+
+@keyframes scroll-left {
+	0% {
+		transform: translateX(10%);
+	}
+
+	100% {
+		transform: translateX(-110%);
+	}
+}
